@@ -14,6 +14,16 @@
 		12764CCA2B058756007631D7 /* Fiscavis2_0Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12764CC92B058756007631D7 /* Fiscavis2_0Tests.swift */; };
 		12764CD42B058756007631D7 /* Fiscavis2_0UITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12764CD32B058756007631D7 /* Fiscavis2_0UITests.swift */; };
 		12764CD62B058756007631D7 /* Fiscavis2_0UITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12764CD52B058756007631D7 /* Fiscavis2_0UITestsLaunchTests.swift */; };
+		12764CE62B0673EC007631D7 /* Expense.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12764CE52B0673EC007631D7 /* Expense.swift */; };
+		12764CE82B067400007631D7 /* Budget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12764CE72B067400007631D7 /* Budget.swift */; };
+		12764CEA2B067E92007631D7 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12764CE92B067E92007631D7 /* HomeView.swift */; };
+		12764CEC2B067F0B007631D7 /* TabBarButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12764CEB2B067F0B007631D7 /* TabBarButton.swift */; };
+		12764CEF2B06831B007631D7 /* HapticManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12764CEE2B06831B007631D7 /* HapticManager.swift */; };
+		12764CFC2B068534007631D7 /* ExpenseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12764CFB2B068534007631D7 /* ExpenseView.swift */; };
+		12764CFE2B068540007631D7 /* BudgetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12764CFD2B068540007631D7 /* BudgetView.swift */; };
+		12764D002B069340007631D7 /* ExpenseCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12764CFF2B069340007631D7 /* ExpenseCardView.swift */; };
+		12764D022B06934D007631D7 /* BudgetCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12764D012B06934D007631D7 /* BudgetCardView.swift */; };
+		12764D042B069C21007631D7 /* UIExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12764D032B069C21007631D7 /* UIExtension.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -45,6 +55,16 @@
 		12764CCF2B058756007631D7 /* Fiscavis2.0UITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Fiscavis2.0UITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		12764CD32B058756007631D7 /* Fiscavis2_0UITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Fiscavis2_0UITests.swift; sourceTree = "<group>"; };
 		12764CD52B058756007631D7 /* Fiscavis2_0UITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Fiscavis2_0UITestsLaunchTests.swift; sourceTree = "<group>"; };
+		12764CE52B0673EC007631D7 /* Expense.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Expense.swift; sourceTree = "<group>"; };
+		12764CE72B067400007631D7 /* Budget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Budget.swift; sourceTree = "<group>"; };
+		12764CE92B067E92007631D7 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
+		12764CEB2B067F0B007631D7 /* TabBarButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarButton.swift; sourceTree = "<group>"; };
+		12764CEE2B06831B007631D7 /* HapticManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HapticManager.swift; sourceTree = "<group>"; };
+		12764CFB2B068534007631D7 /* ExpenseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpenseView.swift; sourceTree = "<group>"; };
+		12764CFD2B068540007631D7 /* BudgetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BudgetView.swift; sourceTree = "<group>"; };
+		12764CFF2B069340007631D7 /* ExpenseCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpenseCardView.swift; sourceTree = "<group>"; };
+		12764D012B06934D007631D7 /* BudgetCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BudgetCardView.swift; sourceTree = "<group>"; };
+		12764D032B069C21007631D7 /* UIExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIExtension.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -95,6 +115,10 @@
 		12764CB62B058755007631D7 /* Fiscavis2.0 */ = {
 			isa = PBXGroup;
 			children = (
+				12764CED2B068305007631D7 /* Common */,
+				12764CE22B067359007631D7 /* Models */,
+				12764CE42B06739B007631D7 /* Screens */,
+				12764CE32B067367007631D7 /* Views */,
 				12764CB72B058755007631D7 /* Fiscavis2_0App.swift */,
 				12764CB92B058755007631D7 /* ContentView.swift */,
 				12764CBB2B058756007631D7 /* Assets.xcassets */,
@@ -127,6 +151,44 @@
 				12764CD52B058756007631D7 /* Fiscavis2_0UITestsLaunchTests.swift */,
 			);
 			path = Fiscavis2.0UITests;
+			sourceTree = "<group>";
+		};
+		12764CE22B067359007631D7 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				12764CE52B0673EC007631D7 /* Expense.swift */,
+				12764CE72B067400007631D7 /* Budget.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		12764CE32B067367007631D7 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				12764CE92B067E92007631D7 /* HomeView.swift */,
+				12764CEB2B067F0B007631D7 /* TabBarButton.swift */,
+				12764CFB2B068534007631D7 /* ExpenseView.swift */,
+				12764CFD2B068540007631D7 /* BudgetView.swift */,
+				12764CFF2B069340007631D7 /* ExpenseCardView.swift */,
+				12764D012B06934D007631D7 /* BudgetCardView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		12764CE42B06739B007631D7 /* Screens */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Screens;
+			sourceTree = "<group>";
+		};
+		12764CED2B068305007631D7 /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				12764CEE2B06831B007631D7 /* HapticManager.swift */,
+				12764D032B069C21007631D7 /* UIExtension.swift */,
+			);
+			path = Common;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -259,8 +321,18 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				12764D022B06934D007631D7 /* BudgetCardView.swift in Sources */,
+				12764CFE2B068540007631D7 /* BudgetView.swift in Sources */,
+				12764D002B069340007631D7 /* ExpenseCardView.swift in Sources */,
+				12764CE82B067400007631D7 /* Budget.swift in Sources */,
+				12764CE62B0673EC007631D7 /* Expense.swift in Sources */,
+				12764CEF2B06831B007631D7 /* HapticManager.swift in Sources */,
 				12764CBA2B058755007631D7 /* ContentView.swift in Sources */,
+				12764D042B069C21007631D7 /* UIExtension.swift in Sources */,
+				12764CEA2B067E92007631D7 /* HomeView.swift in Sources */,
 				12764CB82B058755007631D7 /* Fiscavis2_0App.swift in Sources */,
+				12764CEC2B067F0B007631D7 /* TabBarButton.swift in Sources */,
+				12764CFC2B068534007631D7 /* ExpenseView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
