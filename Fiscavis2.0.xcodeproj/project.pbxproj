@@ -24,6 +24,13 @@
 		12764D002B069340007631D7 /* ExpenseCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12764CFF2B069340007631D7 /* ExpenseCardView.swift */; };
 		12764D022B06934D007631D7 /* BudgetCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12764D012B06934D007631D7 /* BudgetCardView.swift */; };
 		12764D042B069C21007631D7 /* UIExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12764D032B069C21007631D7 /* UIExtension.swift */; };
+		12764D062B069FB3007631D7 /* HeaderBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12764D052B069FB3007631D7 /* HeaderBarView.swift */; };
+		12764D082B06A36C007631D7 /* SideMenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12764D072B06A36C007631D7 /* SideMenuView.swift */; };
+		12764D0A2B07D5B0007631D7 /* ExpensesScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12764D092B07D5B0007631D7 /* ExpensesScreen.swift */; };
+		12764D0C2B07E209007631D7 /* GroupedExpenses.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12764D0B2B07E209007631D7 /* GroupedExpenses.swift */; };
+		12764D0E2B07E2F5007631D7 /* ArcShape.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12764D0D2B07E2F5007631D7 /* ArcShape.swift */; };
+		12764D102B07EBAD007631D7 /* BudgetScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12764D0F2B07EBAD007631D7 /* BudgetScreen.swift */; };
+		12764D122B07F79F007631D7 /* ExpenseChart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12764D112B07F79F007631D7 /* ExpenseChart.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -65,6 +72,13 @@
 		12764CFF2B069340007631D7 /* ExpenseCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpenseCardView.swift; sourceTree = "<group>"; };
 		12764D012B06934D007631D7 /* BudgetCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BudgetCardView.swift; sourceTree = "<group>"; };
 		12764D032B069C21007631D7 /* UIExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIExtension.swift; sourceTree = "<group>"; };
+		12764D052B069FB3007631D7 /* HeaderBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderBarView.swift; sourceTree = "<group>"; };
+		12764D072B06A36C007631D7 /* SideMenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideMenuView.swift; sourceTree = "<group>"; };
+		12764D092B07D5B0007631D7 /* ExpensesScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpensesScreen.swift; sourceTree = "<group>"; };
+		12764D0B2B07E209007631D7 /* GroupedExpenses.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupedExpenses.swift; sourceTree = "<group>"; };
+		12764D0D2B07E2F5007631D7 /* ArcShape.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArcShape.swift; sourceTree = "<group>"; };
+		12764D0F2B07EBAD007631D7 /* BudgetScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BudgetScreen.swift; sourceTree = "<group>"; };
+		12764D112B07F79F007631D7 /* ExpenseChart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpenseChart.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -158,6 +172,7 @@
 			children = (
 				12764CE52B0673EC007631D7 /* Expense.swift */,
 				12764CE72B067400007631D7 /* Budget.swift */,
+				12764D0B2B07E209007631D7 /* GroupedExpenses.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -171,6 +186,9 @@
 				12764CFD2B068540007631D7 /* BudgetView.swift */,
 				12764CFF2B069340007631D7 /* ExpenseCardView.swift */,
 				12764D012B06934D007631D7 /* BudgetCardView.swift */,
+				12764D052B069FB3007631D7 /* HeaderBarView.swift */,
+				12764D072B06A36C007631D7 /* SideMenuView.swift */,
+				12764D112B07F79F007631D7 /* ExpenseChart.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -178,6 +196,8 @@
 		12764CE42B06739B007631D7 /* Screens */ = {
 			isa = PBXGroup;
 			children = (
+				12764D092B07D5B0007631D7 /* ExpensesScreen.swift */,
+				12764D0F2B07EBAD007631D7 /* BudgetScreen.swift */,
 			);
 			path = Screens;
 			sourceTree = "<group>";
@@ -187,6 +207,7 @@
 			children = (
 				12764CEE2B06831B007631D7 /* HapticManager.swift */,
 				12764D032B069C21007631D7 /* UIExtension.swift */,
+				12764D0D2B07E2F5007631D7 /* ArcShape.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -321,15 +342,22 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				12764D0E2B07E2F5007631D7 /* ArcShape.swift in Sources */,
+				12764D0A2B07D5B0007631D7 /* ExpensesScreen.swift in Sources */,
+				12764D0C2B07E209007631D7 /* GroupedExpenses.swift in Sources */,
 				12764D022B06934D007631D7 /* BudgetCardView.swift in Sources */,
 				12764CFE2B068540007631D7 /* BudgetView.swift in Sources */,
 				12764D002B069340007631D7 /* ExpenseCardView.swift in Sources */,
 				12764CE82B067400007631D7 /* Budget.swift in Sources */,
 				12764CE62B0673EC007631D7 /* Expense.swift in Sources */,
 				12764CEF2B06831B007631D7 /* HapticManager.swift in Sources */,
+				12764D122B07F79F007631D7 /* ExpenseChart.swift in Sources */,
 				12764CBA2B058755007631D7 /* ContentView.swift in Sources */,
+				12764D102B07EBAD007631D7 /* BudgetScreen.swift in Sources */,
 				12764D042B069C21007631D7 /* UIExtension.swift in Sources */,
+				12764D082B06A36C007631D7 /* SideMenuView.swift in Sources */,
 				12764CEA2B067E92007631D7 /* HomeView.swift in Sources */,
+				12764D062B069FB3007631D7 /* HeaderBarView.swift in Sources */,
 				12764CB82B058755007631D7 /* Fiscavis2_0App.swift in Sources */,
 				12764CEC2B067F0B007631D7 /* TabBarButton.swift in Sources */,
 				12764CFC2B068534007631D7 /* ExpenseView.swift in Sources */,

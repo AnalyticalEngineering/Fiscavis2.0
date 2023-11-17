@@ -21,45 +21,9 @@ struct Home: View {
     
     var body: some View {
        
-        HStack(spacing: 5){
-            Button(action: {
-                HapticManager.notification(type: .success)
-            }) {
-                Image(systemName: "line.3.horizontal")
-                    .foregroundStyle(.primary)
-                    .font(.title2)
-                    .fontWeight(.bold)
-                    .padding(.horizontal, 20)
-                    .padding(10)
-                    .background(Color.black.opacity(0.1))
-                    .clipShape(Circle())
-            }
-            
-            Spacer()
-            Image("logo")
-                .resizable()
-                .aspectRatio(contentMode: .fit)
-                .frame(width: 200, height: 45)
-                .padding(.horizontal, 10)
-               
-            Spacer()
-            Button(action: {
-                HapticManager.notification(type: .success)
-            }) {
-                Image(systemName: "plus")
-                    .foregroundStyle(.primary)
-                    .font(.title2)
-                    .fontWeight(.bold)
-                    .padding(.horizontal, 22)
-                    .padding(10)
-                    .background(Color.black.opacity(0.1))
-                    .clipShape(Circle())
-            }
-           
-            
-        }
-        .frame(width: .widthPer(per: 0.8), height: .widthPer(per: 0.1))
-        
+        //MARK: HEADER BAR VIEW
+        HeaderBarView()
+        .frame(width: .widthPer(per: 0.9), height: .widthPer(per: 0.1))
         
             // App Bar....
             VStack(spacing: 10){
@@ -86,7 +50,7 @@ struct Home: View {
                                 }
                             }
                             
-                            if yAxis > 0 && isHide{
+                            if yAxis > 15 && isHide{
                                 
                                 DispatchQueue.main.async {
                                     withAnimation{isHide = false}
