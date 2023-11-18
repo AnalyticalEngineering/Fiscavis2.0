@@ -12,51 +12,63 @@ struct ExpenseChart: View {
         ZStack(alignment: .center) {
             
             Rectangle()
-                .foregroundColor(.clear)
-                .frame(width: .screenWidth, height: .widthPer(per: 1.1) )
+                .foregroundColor(.colorBlue)
                 .cornerRadius(25)
             
             ZStack{
                 ArcShape()
-                    .foregroundColor(.gray.opacity(0.6))
+                    .foregroundColor(.white.opacity(0.6))
                 
                 ArcShape(start: 0, end: 230)
-                    .foregroundColor(.colorOrange)
+                    .foregroundColor(.colorGreen)
                     .shadow( color: .colorGrey.opacity(0.5) , radius: 7)
-            }
-            .frame(width: .widthPer(per: 0.70), height: .widthPer(per: 0.70) )
+                
+                
+                    .overlay {
+                        ArcShape()
+                            .stroke( Color.black, lineWidth: 1)
+                    }
+                
+            }.padding(.horizontal)
             
-            
-            VStack(spacing: .widthPer(per: 0.04)){
-                Image("logo")
+            VStack(spacing: 25){
+                Text("")
+                Image("app_logo")
                     .resizable()
                     .scaledToFit()
-                    .frame(width: .widthPer(per: 0.45) )
+                    .frame(width: .widthPer(per: 0.55) )
                 
                 Text("$1,235")
-                    .font(.customfont(.bold, fontSize: 30))
-                    .foregroundColor(.primary)
+                    .font(.largeTitle)
+                    .fontWeight(.heavy)
+                    .fontDesign(.rounded)
+                    .foregroundColor(.white)
                 
                 Text("Total Expenditures")
-                    .font(.customfont(.semibold, fontSize: 12))
+                    .fontWeight(.bold)
                     .foregroundColor(.primary)
                 Button {
                     HapticManager.notification(type: .success)
                     BudgetScreen()
                 } label: {
-                    Text("See your budget")
-                        .font(.customfont(.semibold, fontSize: 12))
-                        .foregroundStyle(.primary)
+                    Text("Review Budget")
+                        .font(.customfont(.bold, fontSize: 16))
+                        .foregroundStyle(.black)
+                        .fontWeight(.bold)
                 }
-                .padding(10)
-                .background(Color.colorGray.opacity(  0.2 ))
+                .padding( 15)
+                .background(Color.colorGray.opacity(  0.95 ))
                 .overlay {
                     RoundedRectangle(cornerRadius:  16)
-                        .stroke( Color.colorGrey, lineWidth: 3)
+                        .stroke( Color.black, lineWidth: 7)
                 }
+                
                 .cornerRadius(16)
+                
             }
+            
         }
+        .frame(width: .widthPer(per: 1.0), height: .widthPer(per: 1.0) )
     }
 }
 

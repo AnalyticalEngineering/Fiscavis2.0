@@ -13,5 +13,7 @@ struct Fiscavis2_0App: App {
         WindowGroup {
             ContentView()
         }
+        /// Setting Up the Container
+        .modelContainer(for: [Expense.self, Budget.self])
     }
 }

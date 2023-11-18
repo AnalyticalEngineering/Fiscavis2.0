@@ -31,6 +31,7 @@
 		12764D0E2B07E2F5007631D7 /* ArcShape.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12764D0D2B07E2F5007631D7 /* ArcShape.swift */; };
 		12764D102B07EBAD007631D7 /* BudgetScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12764D0F2B07EBAD007631D7 /* BudgetScreen.swift */; };
 		12764D122B07F79F007631D7 /* ExpenseChart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12764D112B07F79F007631D7 /* ExpenseChart.swift */; };
+		12764D172B08202F007631D7 /* AddExpenseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12764D162B08202F007631D7 /* AddExpenseView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -79,6 +80,7 @@
 		12764D0D2B07E2F5007631D7 /* ArcShape.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArcShape.swift; sourceTree = "<group>"; };
 		12764D0F2B07EBAD007631D7 /* BudgetScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BudgetScreen.swift; sourceTree = "<group>"; };
 		12764D112B07F79F007631D7 /* ExpenseChart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpenseChart.swift; sourceTree = "<group>"; };
+		12764D162B08202F007631D7 /* AddExpenseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddExpenseView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -129,6 +131,7 @@
 		12764CB62B058755007631D7 /* Fiscavis2.0 */ = {
 			isa = PBXGroup;
 			children = (
+				12764D132B07FE73007631D7 /* TabBarPackage */,
 				12764CED2B068305007631D7 /* Common */,
 				12764CE22B067359007631D7 /* Models */,
 				12764CE42B06739B007631D7 /* Screens */,
@@ -189,6 +192,7 @@
 				12764D052B069FB3007631D7 /* HeaderBarView.swift */,
 				12764D072B06A36C007631D7 /* SideMenuView.swift */,
 				12764D112B07F79F007631D7 /* ExpenseChart.swift */,
+				12764D162B08202F007631D7 /* AddExpenseView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -210,6 +214,29 @@
 				12764D0D2B07E2F5007631D7 /* ArcShape.swift */,
 			);
 			path = Common;
+			sourceTree = "<group>";
+		};
+		12764D132B07FE73007631D7 /* TabBarPackage */ = {
+			isa = PBXGroup;
+			children = (
+				12764D142B07FE7E007631D7 /* Models */,
+				12764D152B07FE86007631D7 /* View */,
+			);
+			path = TabBarPackage;
+			sourceTree = "<group>";
+		};
+		12764D142B07FE7E007631D7 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		12764D152B07FE86007631D7 /* View */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = View;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -349,6 +376,7 @@
 				12764CFE2B068540007631D7 /* BudgetView.swift in Sources */,
 				12764D002B069340007631D7 /* ExpenseCardView.swift in Sources */,
 				12764CE82B067400007631D7 /* Budget.swift in Sources */,
+				12764D172B08202F007631D7 /* AddExpenseView.swift in Sources */,
 				12764CE62B0673EC007631D7 /* Expense.swift in Sources */,
 				12764CEF2B06831B007631D7 /* HapticManager.swift in Sources */,
 				12764D122B07F79F007631D7 /* ExpenseChart.swift in Sources */,

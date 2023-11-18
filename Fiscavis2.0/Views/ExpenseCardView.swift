@@ -8,11 +8,33 @@
 import SwiftUI
 
 struct ExpenseCardView: View {
+    @Bindable var expense: Expense
+    var displayTag: Bool = true
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        HStack {
+            VStack(alignment: .leading) {
+                Text(expense.title)
+                
+                Text(expense.subTitle)
+                    .font(.caption)
+                    .foregroundStyle(.gray)
+                
+                if let budgetName = expense.budget?.budgetName, displayTag {
+                    Text(budgetName)
+                        .font(.caption2)
+                        .foregroundStyle(.white)
+                        .padding(.horizontal, 10)
+                        .padding(.vertical, 4)
+                        .background(.red.gradient, in: .capsule)
+                }
+            }
+            .lineLimit(1)
+            
+            Spacer(minLength: 5)
+            
+            /// Currency String
+            Text(expense.currencyString)
+                .font(.title3.bold())
+        }
     }
-}
-
-#Preview {
-    ExpenseCardView()
 }

@@ -8,122 +8,125 @@
 import SwiftUI
 import SwiftData
 
-
-
 struct ExpensesScreen: View {
-    //MARK:  PROPERTIES
+    
     /// Grouped Expenses Properties
-    @Query(sort: [SortDescriptor(\Expense.date, order: .reverse)], animation: .snappy) private var allExpenses: [Expense]
+    @Query(sort: [
+        SortDescriptor(\Expense.date, order: .reverse)
+    ], animation: .snappy) private var allExpenses: [Expense]
     @Environment(\.modelContext) private var context
     /// Grouped Expenses
     /// This will also be used for filtering purpose
     @State private var groupedExpenses: [GroupedExpenses] = []
     @State private var originalGroupedExpenses: [GroupedExpenses] = []
     @State private var addExpense: Bool = false
-    
     /// Search Text
     @State private var searchText: String = ""
-    @State var top = UIApplication.shared.windows.first?.safeAreaInsets.top
-    /// View Properties
-    
-    /// For Smooth Shape Sliding Effect, We're going to use Matched Geometry Effect
-    @Namespace private var animation
-    @State private var tabShapePosition: CGPoint = .zero
-    
-    
-    @State var isHide = false
-    
     var body: some View {
-        VStack(spacing: 0){
-            // App Bar....
-            VStack(spacing: 22){
-                if !isHide{
-                    //MARK: HEADER BAR VIEW
-                  
-                    Text("hello")
-                }
-            }
-            .padding(.top,top! + 5)
+        VStack{
             
-            //MARK:  DISAPPEARING EXPENSE ARC SHAPE CHART
             HeaderBarView()
             
-            ScrollView(.vertical, showsIndicators: true) {
-                ExpenseChart()
-                // geomtry reader for getting location values....
-                VStack(spacing: 0){
-                    
-                    // geomtry reader for getting location values....
-                    
-                    GeometryReader{reader -> AnyView in
-                        
-                        let yAxis = reader.frame(in: .global).minY
-                        
-                        // logic simple if if goes below zero hide nav bar
-                        // above zero show navbar...
-                        
-                        if yAxis < 0 && !isHide{
-                            
-                            DispatchQueue.main.async {
-                                withAnimation{isHide = true}
-                            }
-                        }
-                        
-                        if yAxis > 0 && isHide{
-                            
-                            DispatchQueue.main.async {
-                                withAnimation{isHide = false}
-                            }
-                        }
-                        
-                        return AnyView(
-                            Text("")
-                                .frame(width: 0, height: 0)
-                        )
-                    }
-                    .frame(width: 0, height: 0)
-                    
-                    VStack(spacing: 15){
-                        
-                        ForEach(1...20,id: \.self){i in
-                            
-                            VStack(spacing: 10){
-                                
-                                HStack(spacing: 10){
-                                    
-                                    Image("logo")
-                                        .resizable()
-                                        .frame(width: 35, height: 35)
-                                        .clipShape(Circle())
-                                    
-                                    VStack(alignment: .leading, spacing: 4) {
-                                        
-                                        Text("Kavsoft")
-                                            .font(.title2)
-                                            .fontWeight(.semibold)
-                                            .foregroundColor(.black)
-                                        
-                                        Text("\(45 - i) Min")
-                                    }
-                                    
-                                    Spacer(minLength: 0)
+            ScrollView {
+                VStack(alignment: .center) {
+              
+                    ExpenseChart()
+                       
+                        ForEach($groupedExpenses) { $group in
+                            Section(group.groupTitle) {
+                                ForEach(group.expenses) { expense in
+                                    /// Card View
+                                    ExpenseCardView(expense: expense)
+                                        .swipeActions(edge: .trailing, allowsFullSwipe: false) {
+                                            /// Delete Button
+                                            Button {
+                                                /// Deleting Data
+                                                context.delete(expense)
+                                                withAnimation {
+                                                    group.expenses.removeAll(where: { $0.id == expense.id })
+                                                    /// Removing Group, if no expenses present
+                                                    if group.expenses.isEmpty {
+                                                        groupedExpenses.removeAll(where: { $0.id == group.id })
+                                                    }
+                                                }
+                                            } label: {
+                                                Image(systemName: "trash")
+                                            }
+                                            .tint(.red)
+                                        }
                                 }
-                                
-                                Text("Lorem Ipsum is simply dummy text of the printing and typesetting industry. ")
                             }
-                            .padding()
-                            .background(Color.white)
+                        }
+                      
+                    }
+                    
+                    .onChange(of: searchText, initial: false) { oldValue, newValue in
+                        if !newValue.isEmpty {
+                            filterExpenses(newValue)
+                        } else {
+                            groupedExpenses = originalGroupedExpenses
+                        }
+                    }
+                    .onChange(of: allExpenses, initial: true) { oldValue, newValue in
+                        if newValue.count > oldValue.count || groupedExpenses.isEmpty  {
+                            createGroupedExpenses(newValue)
                         }
                     }
                 }
-                .padding(.top)
+                
             }
         }
-        .ignoresSafeArea(.all)
-    }
         
+    
+    /// Filtering Expenses
+    func filterExpenses(_ text: String) {
+        Task.detached(priority: .high) {
+            let query = text.lowercased()
+            let filteredExpenses = originalGroupedExpenses.compactMap { group -> GroupedExpenses? in
+                let expenses = group.expenses.filter({ $0.title.lowercased().contains(query) })
+                if expenses.isEmpty {
+                    return nil
+                }
+                return .init(date: group.date, expenses: expenses)
+            }
+            
+            await MainActor.run {
+                groupedExpenses = filteredExpenses
+            }
+        }
     }
+    
+    /// Creating Grouped Expenses (Grouping By Date)
+    func createGroupedExpenses(_ expenses: [Expense]) {
+        Task.detached(priority: .high) {
+            let groupedDict = Dictionary(grouping: expenses) { expense in
+                let dateComponents = Calendar.current.dateComponents([.day, .month, .year], from: expense.date)
+                
+                return dateComponents
+            }
+            
+            /// Sorting Dictionary in Descending Order
+            let sortedDict = groupedDict.sorted {
+                let calendar = Calendar.current
+                let date1 = calendar.date(from: $0.key) ?? .init()
+                let date2 = calendar.date(from: $1.key) ?? .init()
+                
+                return calendar.compare(date1, to: date2, toGranularity: .day) == .orderedDescending
+            }
+            
+            /// Adding to the Grouped Expenses Array
+            /// UI Must be Updated on Main Thread
+            await MainActor.run {
+                groupedExpenses = sortedDict.compactMap({ dict in
+                    let date = Calendar.current.date(from: dict.key) ?? .init()
+                    return .init(date: date, expenses: dict.value)
+                })
+                originalGroupedExpenses = groupedExpenses
+            }
+        }
+    }
+}
 
-    #Preview {
-    ExpensesScreen()
+#Preview {
+    ContentView()
 }
