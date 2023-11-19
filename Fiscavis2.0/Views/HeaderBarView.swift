@@ -28,8 +28,7 @@ struct HeaderBarView: View {
                     .foregroundStyle(.white)
                     .font(.title2)
                     .fontWeight(.bold)
-                    .padding(.horizontal, 13)
-                    .padding(13)
+                    .padding(10)
                     .background(Color.colorOrange)
                     .clipShape(Circle())
             }
@@ -51,17 +50,18 @@ struct HeaderBarView: View {
                     .font(.title2)
                     .fontWeight(.bold)
                     .padding(.horizontal, 22)
-                    .padding(10)
+                    .padding(8)
                     .background(Color.colorOrange)
                     .clipShape(Circle())
             }
             .frame(width: .widthPer(per: 0.2), height: .widthPer(per: 0.1))
             
         }
-        .background(Color.colorBlue)
+        .background(Color.colorBackground)
+        Spacer()
         .sheet(isPresented: $addExpense) {
             //MARK:  ADD EXPENSE VIEW
-            AddExpenseView()
+            AddExpenseScreen()
             //                .interactiveDismissDisabled()
         }
         .sheet(isPresented: $openSideMenu) {
@@ -69,7 +69,6 @@ struct HeaderBarView: View {
             SideMenuView()
             //                .interactiveDismissDisabled()
         }
-        Spacer()
     }
 }
     

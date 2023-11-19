@@ -1,5 +1,5 @@
 //
-//  AddExpenseView.swift
+//  AddExpenseScreen.swift
 //  Fiscavis2.0
 //
 //  Created by J. DeWeese on 11/17/23.
@@ -8,7 +8,7 @@
 import SwiftUI
 import SwiftData
 
-struct AddExpenseView: View {
+struct AddExpenseScreen: View {
     @Environment(\.dismiss) private var dismiss
     @Environment(\.modelContext) private var context
     /// View Properties
@@ -22,35 +22,9 @@ struct AddExpenseView: View {
     var body: some View {
         NavigationStack {
             List {
-                Section("Title") {
-                    TextField("Magic Keyboard", text: $title)
-                }
-                
-                Section("Description") {
-                    TextField("Bought a keyboard at the Apple Store", text: $subTitle)
-                }
-                
-                Section("Amount Spent") {
-                    HStack(spacing: 4) {
-                        Text("$")
-                            .fontWeight(.semibold)
-                        
-                        TextField("", value: $amount, formatter: formatter)
-                            .keyboardType(.numberPad)
-                            .foregroundStyle(.colorGrey)
-                    }
-                }
-                
-                Section("Date") {
-                    DatePicker("", selection: $date, displayedComponents: [.date])
-                        .datePickerStyle(.graphical)
-                        .labelsHidden()
-                }
-                
-                /// Category Picker
-                if !allBudgets.isEmpty {
+                Section("Budget") {
                     HStack {
-                        Text("Budget")
+                        Text("Budget Category")
                         
                         Spacer()
                         
@@ -74,8 +48,34 @@ struct AddExpenseView: View {
                         }
                     }
                 }
+                
+                Section("Receipt Name ") {
+                    TextField("Name of company or person paid.", text: $title)
+                }
+                
+                Section("Description") {
+                    TextField("What was purchased?", text: $subTitle)
+                }
+                
+                Section("Amount") {
+                    HStack(spacing: 4) {
+                        Text("$")
+                            .fontWeight(.semibold)
+                            .foregroundStyle(.colorGrey)
+                        
+                        TextField("", value: $amount, formatter: formatter)
+                            .keyboardType(.numberPad)
+                            .foregroundStyle(.colorGrey)
+                    }
+                }
+                
+                Section("Date") {
+                    DatePicker("", selection: $date, displayedComponents: [.date])
+                        .datePickerStyle(.graphical)
+                        .labelsHidden()
+                }
             }
-            .navigationTitle("Add Expense")
+            
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 /// Cancel & Add Button
@@ -83,17 +83,26 @@ struct AddExpenseView: View {
                     Button("Cancel") {
                         dismiss()
                     }
+                    .fontDesign(.serif)
+                    .font(.title2)
+                    .fontWeight(.bold)
                     .tint(.red)
                 }
                 
                 ToolbarItem(placement: .topBarTrailing) {
                     Button("Save", action: addExpense)
+                        .fontDesign(.serif)
+                        .font(.title2)
+                        .fontWeight(.bold)
+                        .tint(.colorGreen)
                         .disabled(isAddButtonDisabled)
                 }
             }
+            .navigationTitle("Enter Expense")
+                    .navigationBarTitleDisplayMode(.inline)
         }
+        
     }
-    
     /// Disabling Add Button, until all data has been entered
     var isAddButtonDisabled: Bool {
         return title.isEmpty || subTitle.isEmpty || amount == .zero
@@ -117,5 +126,6 @@ struct AddExpenseView: View {
 }
 
 #Preview {
-    AddExpenseView()
+    AddExpenseScreen()
+        .modelContainer(for: [Expense.self, Budget.self])
 }

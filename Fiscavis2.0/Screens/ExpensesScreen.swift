@@ -9,7 +9,7 @@ import SwiftUI
 import SwiftData
 
 struct ExpensesScreen: View {
-    
+    @Binding var currentTab: String
     /// Grouped Expenses Properties
     @Query(sort: [
         SortDescriptor(\Expense.date, order: .reverse)
@@ -20,113 +20,146 @@ struct ExpensesScreen: View {
     @State private var groupedExpenses: [GroupedExpenses] = []
     @State private var originalGroupedExpenses: [GroupedExpenses] = []
     @State private var addExpense: Bool = false
+    @State private var addSideMenu: Bool = false
     /// Search Text
     @State private var searchText: String = ""
     var body: some View {
-        VStack{
-            
-            HeaderBarView()
-            
-            ScrollView {
-                VStack(alignment: .center) {
-              
-                    ExpenseChart()
-                       
-                        ForEach($groupedExpenses) { $group in
-                            Section(group.groupTitle) {
-                                ForEach(group.expenses) { expense in
-                                    /// Card View
-                                    ExpenseCardView(expense: expense)
-                                        .swipeActions(edge: .trailing, allowsFullSwipe: false) {
-                                            /// Delete Button
-                                            Button {
-                                                /// Deleting Data
-                                                context.delete(expense)
-                                                withAnimation {
-                                                    group.expenses.removeAll(where: { $0.id == expense.id })
-                                                    /// Removing Group, if no expenses present
-                                                    if group.expenses.isEmpty {
-                                                        groupedExpenses.removeAll(where: { $0.id == group.id })
-                                                    }
-                                                }
-                                            } label: {
-                                                Image(systemName: "trash")
+        NavigationStack {
+            List {
+                ForEach($groupedExpenses) { $group in
+                    Section(group.groupTitle) {
+                        ForEach(group.expenses) { expense in
+                            /// Card View
+                            ExpenseCardView(expense: expense)
+                                .swipeActions(edge: .trailing, allowsFullSwipe: false) {
+                                    /// Delete Button
+                                    Button {
+                                        /// Deleting Data
+                                        context.delete(expense)
+                                        withAnimation {
+                                            group.expenses.removeAll(where: { $0.id == expense.id })
+                                            /// Removing Group, if no expenses present
+                                            if group.expenses.isEmpty {
+                                                groupedExpenses.removeAll(where: { $0.id == group.id })
                                             }
-                                            .tint(.red)
                                         }
+                                    } label: {
+                                        Image(systemName: "trash")
+                                    }
+                                    .tint(.red)
                                 }
-                            }
                         }
-                      
+                    }
+                }
+            }
+            .navigationTitle("Expenses")
+            /// Search Bar
+            .searchable(text: $searchText, placement: .navigationBarDrawer, prompt: Text("Search"))
+            .overlay {
+                if allExpenses.isEmpty || groupedExpenses.isEmpty {
+                    ContentUnavailableView {
+                        Label("No Expenses, living Wild!", systemImage: "tray.fill")
+                            .foregroundStyle(.primary)
+                            .font(.title2)
+                            .fontWeight(.bold)
+                        Text("Press '+' button to add expenses.")
+                            .font(.callout)
+                            .fontWeight(.bold)
+                    }
+                }
+            }            /// New Expense Add Button
+            .toolbar {
+                ToolbarItem(placement: .topBarTrailing) {
+                    Button {
+                        addExpense.toggle()
+                    } label: {
+                        Image(systemName: "plus.circle.fill")
+                            .font(.title)
+                            .foregroundStyle(.primary)
+                            .fontWeight(.heavy)
+                    }
+                }
+                
+                ToolbarItem(placement: .topBarLeading) {
+                    Button {
+                        addSideMenu.toggle()
+                    } label: {
+                        Image(systemName: "line.3.horizontal")
+                            .font(.title)
+                            .foregroundStyle(.primary)
+                            .fontWeight(.heavy)
+                    }
+                }
+            }
+        }
+    
+                .onChange(of: searchText, initial: false) { oldValue, newValue in
+                    if !newValue.isEmpty {
+                        filterExpenses(newValue)
+                    } else {
+                        groupedExpenses = originalGroupedExpenses
+                    }
+                }
+                .onChange(of: allExpenses, initial: true) { oldValue, newValue in
+                    if newValue.count > oldValue.count || groupedExpenses.isEmpty || currentTab == "" {
+                        createGroupedExpenses(newValue)
+                    }
+                }
+                .sheet(isPresented: $addExpense) {
+                    AddExpenseScreen()
+                        .interactiveDismissDisabled()
+                }
+            }
+            
+            /// Filtering Expenses
+            func filterExpenses(_ text: String) {
+                Task.detached(priority: .high) {
+                    let query = text.lowercased()
+                    let filteredExpenses = originalGroupedExpenses.compactMap { group -> GroupedExpenses? in
+                        let expenses = group.expenses.filter({ $0.title.lowercased().contains(query) })
+                        if expenses.isEmpty {
+                            return nil
+                        }
+                        return .init(date: group.date, expenses: expenses)
                     }
                     
-                    .onChange(of: searchText, initial: false) { oldValue, newValue in
-                        if !newValue.isEmpty {
-                            filterExpenses(newValue)
-                        } else {
-                            groupedExpenses = originalGroupedExpenses
-                        }
-                    }
-                    .onChange(of: allExpenses, initial: true) { oldValue, newValue in
-                        if newValue.count > oldValue.count || groupedExpenses.isEmpty  {
-                            createGroupedExpenses(newValue)
-                        }
+                    await MainActor.run {
+                        groupedExpenses = filteredExpenses
                     }
                 }
-                
             }
-        }
-        
-    
-    /// Filtering Expenses
-    func filterExpenses(_ text: String) {
-        Task.detached(priority: .high) {
-            let query = text.lowercased()
-            let filteredExpenses = originalGroupedExpenses.compactMap { group -> GroupedExpenses? in
-                let expenses = group.expenses.filter({ $0.title.lowercased().contains(query) })
-                if expenses.isEmpty {
-                    return nil
+            
+            /// Creating Grouped Expenses (Grouping By Date)
+            func createGroupedExpenses(_ expenses: [Expense]) {
+                Task.detached(priority: .high) {
+                    let groupedDict = Dictionary(grouping: expenses) { expense in
+                        let dateComponents = Calendar.current.dateComponents([.day, .month, .year], from: expense.date)
+                        
+                        return dateComponents
+                    }
+                    
+                    /// Sorting Dictionary in Descending Order
+                    let sortedDict = groupedDict.sorted {
+                        let calendar = Calendar.current
+                        let date1 = calendar.date(from: $0.key) ?? .init()
+                        let date2 = calendar.date(from: $1.key) ?? .init()
+                        
+                        return calendar.compare(date1, to: date2, toGranularity: .day) == .orderedDescending
+                    }
+                    
+                    /// Adding to the Grouped Expenses Array
+                    /// UI Must be Updated on Main Thread
+                    await MainActor.run {
+                        groupedExpenses = sortedDict.compactMap({ dict in
+                            let date = Calendar.current.date(from: dict.key) ?? .init()
+                            return .init(date: date, expenses: dict.value)
+                        })
+                        originalGroupedExpenses = groupedExpenses
+                    }
                 }
-                return .init(date: group.date, expenses: expenses)
-            }
-            
-            await MainActor.run {
-                groupedExpenses = filteredExpenses
             }
         }
-    }
-    
-    /// Creating Grouped Expenses (Grouping By Date)
-    func createGroupedExpenses(_ expenses: [Expense]) {
-        Task.detached(priority: .high) {
-            let groupedDict = Dictionary(grouping: expenses) { expense in
-                let dateComponents = Calendar.current.dateComponents([.day, .month, .year], from: expense.date)
-                
-                return dateComponents
-            }
-            
-            /// Sorting Dictionary in Descending Order
-            let sortedDict = groupedDict.sorted {
-                let calendar = Calendar.current
-                let date1 = calendar.date(from: $0.key) ?? .init()
-                let date2 = calendar.date(from: $1.key) ?? .init()
-                
-                return calendar.compare(date1, to: date2, toGranularity: .day) == .orderedDescending
-            }
-            
-            /// Adding to the Grouped Expenses Array
-            /// UI Must be Updated on Main Thread
-            await MainActor.run {
-                groupedExpenses = sortedDict.compactMap({ dict in
-                    let date = Calendar.current.date(from: dict.key) ?? .init()
-                    return .init(date: date, expenses: dict.value)
-                })
-                originalGroupedExpenses = groupedExpenses
-            }
-        }
-    }
-}
 
-#Preview {
-    ContentView()
-}
+        #Preview {
+            ContentView()
+        }

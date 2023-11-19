@@ -12,21 +12,19 @@ import SwiftData
 class Budget {
     var budgetName: String
     var budgetAmount: Double
-    var amountRemain: Double
     
     /// Category Expenses
     @Relationship(deleteRule: .cascade, inverse: \Expense.budget)
     var expenses: [Expense]?
     
-    init(budgetName: String, budgetAmount: Double, amountRemain: Double, expenses: [Expense]? = nil) {
+    init(budgetName: String, budgetAmount: Double, expenses: [Expense]? = nil) {
         self.budgetName = budgetName
         self.budgetAmount = budgetAmount
-        self.amountRemain = amountRemain
         self.expenses = expenses
     }
     /// Currency String
     @Transient
-    var currencyString: String {
+    var budgetCurrencyString: String {
         let formatter = NumberFormatter()
         formatter.numberStyle = .currency
         
@@ -40,9 +38,9 @@ class Budget {
     }
 }
 
-extension Budget {
-    
-    static var sampleData: Expense {
-        .init(title: "DeesWood Village", subTitle: "Rent", amount: 900.00, date: .now)
-    }
-}
+//extension Budget {
+//    
+//    static var sampleData: Expense {
+//        .init(title: "DeesWood Village", subTitle: "Rent", amount: 900.00, date: .now)
+//    }
+//}
